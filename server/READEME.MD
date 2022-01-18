@@ -1,6 +1,6 @@
 ## TO run this project: 
  
- # first add a .end file and add your API_KEY value
+ # first add a .env file and add your API_KEY value
  
  ## Then install packages
  `yarn`
