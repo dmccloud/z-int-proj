@@ -12,11 +12,11 @@ yarn add
 
 ## add .env file
 
-in the src folder (in server repo)
-add a .env**
-insert the following**
-API_KEY=<'your ticketmaster-api-key-goes-here>
-\*\*
+in the src folder (in server repo)\
+add a .env\
+insert the following\
+API_KEY=<'your ticketmaster-api-key-goes-here>\
+
 save file
 
 ## run
