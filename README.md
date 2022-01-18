@@ -22,7 +22,7 @@ save file
 
 ## run
 
-yarn run
+yarn start
 
 # to run client
 
@@ -37,4 +37,4 @@ yarn add
 
 ## run
 
-yarn run
+yarn start

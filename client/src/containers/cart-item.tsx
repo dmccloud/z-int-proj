@@ -23,7 +23,7 @@ export const GET_EVENT = gql`
 `;
 
 interface CartItemProps {
-  eventId: string;
+  eventId: any;
 }
 
 const CartItem: React.FC<CartItemProps> = ({ eventId }) => {

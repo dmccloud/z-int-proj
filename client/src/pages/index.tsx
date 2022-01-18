@@ -1,32 +1,27 @@
-import React, { Fragment, useMemo, useState } from "react";
-import { Router } from "@reach/router";
-
+import React, { Fragment } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Event from "./event";
 import Events from "./events";
 import Cart from "./cart";
 import Profile from "./profile";
 import { Footer, PageContainer } from "../components";
-import { CartContext } from "../CartContext";
 
-export default function Pages() {
-  const [cart, setCart] = useState([]);
-  const ContextProvider = useMemo<any>(
-    () => ({ cart, setCart }),
-    [cart, setCart]
-  );
+export default function Pages(props: any) {
   return (
-    <CartContext.Provider value={ContextProvider}>
+    <BrowserRouter>
       <Fragment>
         <PageContainer>
-          <Router primary={false} component={Fragment}>
-            <Events path="/" />
-            <Event path="event/:eventId" />
-            <Cart path="cart" />
-            <Profile path="profile" />
-          </Router>
+          <Routes>
+            <Route path="/" element={<Events />} />
+            <Route path="/event/:id" element={<Event />} />
+
+            <Route path="cart" element={<Cart />} />
+            <Route path="profile" element={<Profile />} />
+          </Routes>
         </PageContainer>
+
         <Footer />
       </Fragment>
-    </CartContext.Provider>
+    </BrowserRouter>
   );
 }

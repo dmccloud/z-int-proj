@@ -1,11 +1,10 @@
 import React from "react";
 import { gql, useMutation } from "@apollo/client";
 
-import Button from "../components/button";
 import { cartItemsVar } from "../cache";
 
 export const BOOK_EVENTS = gql`
-  mutation Mutation($eventIds: [ID]!) {
+  mutation BookEvents($eventIds: [ID]!) {
     bookEvents(eventIds: $eventIds) {
       success
       message
@@ -18,7 +17,11 @@ export const BOOK_EVENTS = gql`
   }
 `;
 
-const BookEvents: React.FC<any> = ({ cartItems }) => {
+interface BookEventsProps {
+  cartItems: any;
+}
+
+const BookEvents: React.FC<BookEventsProps> = ({ cartItems }) => {
   const [bookEvents, { data }] = useMutation<any>(BOOK_EVENTS, {
     variables: { eventIds: cartItems },
   });
@@ -26,7 +29,8 @@ const BookEvents: React.FC<any> = ({ cartItems }) => {
   return data && data.bookEvents && !data.bookEvents.success ? (
     <p data-testid="message">{data.bookEvents.message}</p>
   ) : (
-    <Button
+    <button
+      className=" mb-5 h-10 px-10 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
       onClick={async () => {
         await bookEvents();
         cartItemsVar([]);
@@ -34,7 +38,7 @@ const BookEvents: React.FC<any> = ({ cartItems }) => {
       data-testid="book-button"
     >
       Book All
-    </Button>
+    </button>
   );
 };
 

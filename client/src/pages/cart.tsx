@@ -1,9 +1,8 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment } from "react";
 import { gql, useQuery } from "@apollo/client";
+
 import { Header, Loading } from "../components";
 import { CartItem, BookEvents } from "../containers";
-import { RouteComponentProps } from "@reach/router";
-import { CartContext } from "../CartContext";
 
 export const GET_CART_ITEMS = gql`
   query GetCartItems {
@@ -11,11 +10,11 @@ export const GET_CART_ITEMS = gql`
   }
 `;
 
-interface CartProps extends RouteComponentProps {}
+interface CartProps {}
 
 const Cart: React.FC<CartProps> = () => {
   const { data, loading, error } = useQuery<any>(GET_CART_ITEMS);
-  console.log(data);
+
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
 

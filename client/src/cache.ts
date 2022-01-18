@@ -1,5 +1,4 @@
 import { InMemoryCache, Reference, makeVar } from "@apollo/client";
-import { persistCache } from "apollo-cache-persist";
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -17,7 +16,7 @@ export const cache: InMemoryCache = new InMemoryCache({
         },
         events: {
           keyArgs: false,
-          merge(existing, incoming) {
+          merge(existing: any, incoming: any) {
             let events: Reference[] = [];
             if (existing && existing.events) {
               events = events.concat(existing.events);
@@ -34,11 +33,6 @@ export const cache: InMemoryCache = new InMemoryCache({
       },
     },
   },
-});
-
-persistCache<any>({
-  cache,
-  storage: window.localStorage,
 });
 
 export const isLoggedInVar = makeVar<boolean>(!!localStorage.getItem("token"));

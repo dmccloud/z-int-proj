@@ -7,7 +7,6 @@ class EventAPI extends RESTDataSource {
     this.baseURL = `https://app.ticketmaster.com/discovery/v2/`;
   }
   eventReducer(event) {
-    console.log("reducing event");
     return {
       id: event.id,
       name: event.name,

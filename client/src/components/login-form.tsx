@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Button from "./button";
+// import Button from "./button";
 
 interface LoginFormProps {
   login: (a: { variables: any }) => void;
@@ -27,22 +27,27 @@ export default class LoginForm extends Component<
 
   render() {
     return (
-      <div className="flex flex-col items-center grow text-white bg-sky-800">
-        <h1 className="mx-auto">Utah Events</h1>
+      <div className="flex flex-col items-center grow text-white bg-slate-800 m-auto h-screen">
+        <h1 className="mt-auto ">Event Finder</h1>
         <form
-          className="max-w-406 w-full p-2 rounded shadow-md shadow-black text-stone-800 bg-white"
-          onSubmit={(e: any) => this.onSubmit(e)}
+          className="p-10 w-70 flex flex-col items-center mb-auto rounded bg-white text-black shadow-md shadow-blue border-stone-800 hover:border-sky-900"
+          onSubmit={(e) => this.onSubmit(e)}
         >
           <input
-            className="w-full mb-4 px-auto border border-slate-800 text-base hover:border-cyan-800"
+            className="w-full border-2 mt-0 p-1.5 mb-6"
             required
             type="email"
             name="email"
             placeholder="Email"
             data-testid="login-input"
-            onChange={(e: any) => this.onChange(e)}
+            onChange={(e) => this.onChange(e)}
           />
-          <Button type="submit">Log in</Button>
+          <button
+            className=" mb-5 h-10 px-10 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+            type="submit"
+          >
+            Log in
+          </button>
         </form>
       </div>
     );

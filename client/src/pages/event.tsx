@@ -3,10 +3,10 @@ import { gql, useQuery } from "@apollo/client";
 
 import { Loading, Header, EventDetail } from "../components";
 import { ActionButton } from "../containers";
-import { RouteComponentProps } from "@reach/router";
+import { useParams } from "react-router-dom";
 
 export const GET_EVENT_DETAILS = gql`
-  query Event($eventId: ID!) {
+  query GetEvent($eventId: ID!) {
     event(id: $eventId) {
       name
       start
@@ -25,11 +25,13 @@ export const GET_EVENT_DETAILS = gql`
   }
 `;
 
-interface EventProps extends RouteComponentProps {
+interface EventProps {
   eventId?: any;
 }
 
-const Launch: React.FC<EventProps> = ({ eventId }) => {
+const Event: React.FC<EventProps> = (props?: any) => {
+  const { id } = useParams();
+  const eventId = id;
   const { data, loading, error } = useQuery<any>(GET_EVENT_DETAILS, {
     variables: { eventId },
   });
@@ -37,17 +39,16 @@ const Launch: React.FC<EventProps> = ({ eventId }) => {
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
   if (!data) return <p>Not found</p>;
-  console.log(data.event);
 
   return (
     <Fragment>
-      <Header image={data.image}>
-        {data && data.event && data.event.name && data.event.Venue.name}
-      </Header>
-      <EventDetail {...data.event} />
-      <ActionButton {...data.event} />
+      <Header image={data.event.image}></Header>
+      <div className="block m-auto items-center">
+        <EventDetail {...data.event} />
+        <ActionButton {...data.event} />
+      </div>
     </Fragment>
   );
 };
 
-export default Launch;
+export default Event;

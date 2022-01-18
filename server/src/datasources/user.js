@@ -51,7 +51,7 @@ class UserAPI extends DataSource {
   // Book multiple events (runs bookEvent on multiple event ids)
   async bookEvents({ eventIds }) {
     const userId = this.context.user.id;
-    console.log("user id:", userId);
+
     if (!userId) return;
 
     let results = [];

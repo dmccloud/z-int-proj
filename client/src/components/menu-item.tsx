@@ -1,10 +1,11 @@
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 
-export default function MenuItem(props: any) {
-  const { to } = props;
+const MenuItem = (props: any) => {
   return (
-    <div className="grow tracking-wide uppercase">
-      <Link to={to} />
-    </div>
+    <Link className="h-24 grow w-0 uppercase text-center" to={props.to}>
+      <svg className="h-24 block my-auto fill-cyan-100">{props.children}</svg>
+    </Link>
   );
-}
+};
+
+export default MenuItem;

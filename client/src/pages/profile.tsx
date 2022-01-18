@@ -1,10 +1,9 @@
 import React, { Fragment } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { Loading, Header, EventTile } from "../components";
-import { RouteComponentProps } from "@reach/router";
 
 export const GET_MY_EVENTS = gql`
-  query GetMyevents {
+  query GetMyEvents {
     me {
       id
       email
@@ -28,7 +27,7 @@ export const GET_MY_EVENTS = gql`
   }
 `;
 
-interface ProfileProps extends RouteComponentProps {}
+interface ProfileProps {}
 
 const Profile: React.FC<ProfileProps> = () => {
   const { data, loading, error } = useQuery<any>(GET_MY_EVENTS, {

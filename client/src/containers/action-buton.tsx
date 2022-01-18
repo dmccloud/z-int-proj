@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
-import { gql, useMutation, Reference, useReactiveVar } from "@apollo/client";
-import Button from "../components/button";
+import React from "react";
+import { gql, useMutation, useReactiveVar, Reference } from "@apollo/client";
 import { cartItemsVar } from "../cache";
-import { CartContext } from "../CartContext";
 
 export const CANCEL_EVENT = gql`
-  mutation Cancel($eventId: ID!) {
+  mutation CancelEvent($eventId: ID!) {
     cancelEvent(eventId: $eventId) {
       success
       message
@@ -28,15 +26,17 @@ export const CANCEL_EVENT = gql`
   }
 `;
 
-interface ActionButtonProps extends Partial<any> {}
+interface ActionButtonProps {
+  id: any;
+}
 
 const CancelEventButton: React.FC<ActionButtonProps> = ({ id }) => {
   const [mutate, { loading, error }] = useMutation(CANCEL_EVENT, {
     variables: { eventId: id },
-    update(cache, { data: { cancelTrip } }) {
-      // Update the user's cached list of trips to remove the trip that
+    update(cache, { data: { cancelEvent } }) {
+      // Update the user's cached list of events to remove the events that
       // was just canceled.
-      const launch = cancelTrip.events[0];
+      const event = cancelEvent.events[0];
       cache.modify({
         id: cache.identify({
           __typename: "User",
@@ -45,7 +45,7 @@ const CancelEventButton: React.FC<ActionButtonProps> = ({ id }) => {
         fields: {
           events(existingEvents: Reference[], { readField }) {
             return existingEvents.filter(
-              (eventRef) => readField("id", eventRef) !== launch.id
+              (eventRef) => readField("id", eventRef) !== event.id
             );
           },
         },
@@ -58,9 +58,13 @@ const CancelEventButton: React.FC<ActionButtonProps> = ({ id }) => {
 
   return (
     <div>
-      <Button onClick={() => mutate()} data-testid={"action-button"}>
+      <button
+        className=" mb-5 h-10 px-10 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+        onClick={() => mutate()}
+        data-testid={"action-button"}
+      >
         Cancel This Event
-      </Button>
+      </button>
     </div>
   );
 };
@@ -68,19 +72,18 @@ const CancelEventButton: React.FC<ActionButtonProps> = ({ id }) => {
 const ToggleEventButton: React.FC<ActionButtonProps> = ({ id }) => {
   const cartItems = useReactiveVar(cartItemsVar);
   const isInCart = id ? cartItems.includes(id) : false;
-
   return (
     <div>
       <button
+        className=" mb-5 h-10 px-10 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
         onClick={() => {
           if (id) {
             cartItemsVar(
               isInCart
-                ? cartItems.filter((itemId: any) => itemId !== id)
+                ? cartItems.filter((itemId) => itemId !== id)
                 : [...cartItems, id]
             );
           }
-          console.log(cartItems);
         }}
         data-testid={"action-button"}
       >
@@ -90,7 +93,7 @@ const ToggleEventButton: React.FC<ActionButtonProps> = ({ id }) => {
   );
 };
 
-const ActionButton: React.FC<ActionButtonProps> = ({ isBooked, id }) =>
+const ActionButton: React.FC<any> = ({ isBooked, id }) =>
   isBooked ? <CancelEventButton id={id} /> : <ToggleEventButton id={id} />;
 
 export default ActionButton;
