@@ -8,7 +8,7 @@ cd /server
 
 ## install dependencies
 
-yarn add
+`yarn`
 
 ## add .env file
 
@@ -22,7 +22,7 @@ save file
 
 ## run
 
-yarn start
+`yarn start`
 
 # to run client
 
@@ -33,8 +33,8 @@ cd /client
 
 ## install dependencies
 
-yarn add
+`yarn `
 
 ## run
 
-yarn start
+`yarn start`
